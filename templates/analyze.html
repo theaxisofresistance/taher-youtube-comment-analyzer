@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% block title %}Analysis Result | TaherAI{% endblock %}
+
+{% block content %}
+<section class="analysis-header">
+    <div>
+        <h1>Comment Sentiment Analysis</h1>
+        <p>Video ID: <strong>{{ video_id }}</strong></p>
+        <p>Model: <strong>{{ model_name }}</strong></p>
+    </div>
+    <form method="post" class="comment-limit-form">
+        {% if available_models %}
+            <div class="form-field">
+                <label for="model_name">Model</label>
+                <select name="model_name" id="model_name">
+                    {% for available_model in available_models %}
+                        <option value="{{ available_model }}" {% if available_model == model_name %}selected{% endif %}>
+                            {{ available_model }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+        {% endif %}
+        <div class="form-field">
+            <label for="max_comments">Comments</label>
+            <select name="max_comments" id="max_comments">
+                {% for value in [25, 50, 100, 200] %}
+                    <option value="{{ value }}" {% if value == max_comments %}selected{% endif %}>{{ value }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit">Refresh</button>
+    </form>
+</section>
+
+<section class="stats-grid">
+    <div class="stat-card">
+        <span>Total</span>
+        <strong>{{ summary.total }}</strong>
+    </div>
+    <div class="stat-card positive">
+        <span>Positive</span>
+        <strong>{{ summary.positive }}</strong>
+    </div>
+    <div class="stat-card neutral">
+        <span>Neutral</span>
+        <strong>{{ summary.neutral }}</strong>
+    </div>
+    <div class="stat-card negative">
+        <span>Negative</span>
+        <strong>{{ summary.negative }}</strong>
+    </div>
+</section>
+
+<section class="chart-section">
+    <div class="chart-card">
+        <h2>Sentiment Distribution</h2>
+        <canvas id="sentimentChart"></canvas>
+    </div>
+</section>
+
+<section class="comments-section">
+    <h2>Analyzed Comments</h2>
+
+    {% if comments %}
+        <div class="comment-list">
+            {% for comment in comments %}
+                <article class="comment-card">
+                    <img src="{{ comment.author_image }}" alt="{{ comment.author }}" class="avatar">
+                    <div class="comment-body">
+                        <div class="comment-meta">
+                            <strong>{{ comment.author }}</strong>
+                            <span>{{ comment.published_at[:10] }}</span>
+                            <span>👍 {{ comment.like_count }}</span>
+                            <span class="badge {{ comment.sentiment }}">{{ comment.sentiment }}</span>
+                        </div>
+                        <p>{{ comment.text }}</p>
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="empty-state">No comments available.</div>
+    {% endif %}
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const sentimentData = {
+        positive: {{ summary.positive }},
+        neutral: {{ summary.neutral }},
+        negative: {{ summary.negative }}
+    };
+</script>
+<script src="{{ url_for('static', filename='js/chart.js') }}"></script>
+{% endblock %}

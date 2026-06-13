@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Search Videos | TaherAI{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <h1>YouTube Comment Sentiment Analyzer</h1>
+    <p>Search a video, fetch its comments, and classify sentiment into positive, neutral, and negative.</p>
+
+    <form action="{{ url_for('index') }}" method="get" class="hero-search">
+        <input type="text" name="q" value="{{ query or '' }}" placeholder="Search video title, topic, or channel..." required>
+        <button type="submit">Search</button>
+    </form>
+</section>
+
+{% if query %}
+    <section class="section-head">
+        <h2>Search results for “{{ query }}”</h2>
+    </section>
+
+    {% if videos %}
+        <section class="video-grid">
+            {% for video in videos %}
+                <article class="video-card">
+                    <img src="{{ video.thumbnail }}" alt="{{ video.title }} thumbnail" class="thumbnail">
+                    <div class="video-info">
+                        <h3>{{ video.title }}</h3>
+                        <p class="channel">{{ video.channel }}</p>
+                        <p class="date">{{ video.published_at[:10] }}</p>
+                        <div class="actions">
+                            <a href="https://www.youtube.com/watch?v={{ video.video_id }}" target="_blank" class="btn secondary">Open Video</a>
+                            <a href="{{ url_for('analyze', video_id=video.video_id) }}" class="btn primary">Analyze Comments</a>
+                        </div>
+                    </div>
+                </article>
+            {% endfor %}
+        </section>
+    {% else %}
+        <div class="empty-state">No videos found.</div>
+    {% endif %}
+{% endif %}
+{% endblock %}
