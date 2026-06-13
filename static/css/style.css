@@ -265,7 +265,7 @@ a {
 
 .stats-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 16px;
     margin-bottom: 24px;
 }
@@ -289,10 +289,6 @@ a {
 
 .stat-card.positive strong {
     color: var(--green);
-}
-
-.stat-card.neutral strong {
-    color: var(--yellow);
 }
 
 .stat-card.negative strong {
@@ -368,11 +364,6 @@ a {
 
 .badge.positive {
     background: var(--green);
-}
-
-.badge.neutral {
-    background: var(--yellow);
-    color: #111;
 }
 
 .badge.negative {

@@ -42,10 +42,6 @@
         <span>Positive</span>
         <strong>{{ summary.positive }}</strong>
     </div>
-    <div class="stat-card neutral">
-        <span>Neutral</span>
-        <strong>{{ summary.neutral }}</strong>
-    </div>
     <div class="stat-card negative">
         <span>Negative</span>
         <strong>{{ summary.negative }}</strong>
@@ -89,7 +85,6 @@
 <script>
     const sentimentData = {
         positive: {{ summary.positive }},
-        neutral: {{ summary.neutral }},
         negative: {{ summary.negative }}
     };
 </script>

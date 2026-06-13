@@ -7,16 +7,14 @@ import joblib
 
 LABEL_MAP = {
     0: "negative",
-    1: "neutral",
-    2: "positive",
     "0": "negative",
-    "1": "neutral",
+    1: "positive",
+    2: "positive",
+    "1": "positive",
     "2": "positive",
     "neg": "negative",
-    "neu": "neutral",
     "pos": "positive",
     "negative": "negative",
-    "neutral": "neutral",
     "positive": "positive",
 }
 
@@ -116,7 +114,7 @@ def load_model_assets(selected_name=None):
 
 
 def normalize_label(label):
-    return LABEL_MAP.get(label, LABEL_MAP.get(str(label).lower(), "neutral"))
+    return LABEL_MAP.get(label, LABEL_MAP.get(str(label).lower(), "negative"))
 
 
 def fallback_rule_based_sentiment(text: str):
@@ -130,9 +128,7 @@ def fallback_rule_based_sentiment(text: str):
 
     if pos_score > neg_score:
         return "positive"
-    if neg_score > pos_score:
-        return "negative"
-    return "neutral"
+    return "negative"
 
 
 def preprocess_texts(texts):
@@ -188,7 +184,6 @@ def analyze_sentiments(comments, model_name=None):
 
     summary = {
         "positive": 0,
-        "neutral": 0,
         "negative": 0,
         "total": len(comments),
     }

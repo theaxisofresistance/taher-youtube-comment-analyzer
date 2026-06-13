@@ -4,10 +4,10 @@ if (ctx) {
     new Chart(ctx, {
         type: 'doughnut',
         data: {
-            labels: ['Positive', 'Neutral', 'Negative'],
+            labels: ['Positive', 'Negative'],
             datasets: [{
-                data: [sentimentData.positive, sentimentData.neutral, sentimentData.negative],
-                backgroundColor: ['#22c55e', '#eab308', '#ef4444'],
+                data: [sentimentData.positive, sentimentData.negative],
+                backgroundColor: ['#22c55e', '#ef4444'],
                 borderColor: '#181818',
                 borderWidth: 3
             }]

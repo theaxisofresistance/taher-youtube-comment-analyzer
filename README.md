@@ -39,7 +39,7 @@ X = vectorizer.transform(preprocessed)
 preds = model.predict(X)
 ```
 
-Expected labels: `positive`, `neutral`, `negative`, or numeric labels `0`, `1`, `2`.
+Expected labels: `positive` and `negative`, or numeric labels that map to those classes.
 
 Configuration:
 

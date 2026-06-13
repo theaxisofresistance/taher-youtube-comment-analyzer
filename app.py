@@ -51,7 +51,7 @@ def analyze(video_id):
             comments=[],
             model_name=active_model_name,
             available_models=available_models,
-            summary={"positive": 0, "neutral": 0, "negative": 0, "total": 0},
+            summary={"positive": 0, "negative": 0, "total": 0},
         )
 
     results, summary = analyze_sentiments(comments, model_name=active_model_name)
